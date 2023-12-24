@@ -1,3 +1,3 @@
-"""just print+3"""
+"""just print and let pyling fail"""
 print('app running')
 
