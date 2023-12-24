@@ -1,2 +1,3 @@
-print("new feu added")
+"""Module for demonstrating features."""
+print("new feat added")
 
