@@ -33,4 +33,5 @@ jobs:
         script: |
           docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/personal-website:v1
           docker stop my-container || true
+          docker rm my-container || true
           docker run -d --name my-container ${{ secrets.DOCKER_HUB_USERNAME }}/personal-website:v1
