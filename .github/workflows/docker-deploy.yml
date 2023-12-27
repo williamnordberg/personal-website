@@ -38,13 +38,11 @@ jobs:
 
     # Install kubectl and set up the Kubernetes context manually
     - name: Install kubectl and Set up Kubernetes context
-      env:
-        KUBECONFIG_CONTENT: ${{ secrets.KUBECONFIG_CONTENT }}
       run: |
         curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
         chmod +x ./kubectl
         sudo mv ./kubectl /usr/local/bin/kubectl
-        echo "$KUBECONFIG_CONTENT" > kubeconfig
+        echo "${{ secrets.KUBECONFIG_CONTENT }}" > kubeconfig
         export KUBECONFIG=$PWD/kubeconfig
 
     - name: Deploy to Kubernetes Cluster
