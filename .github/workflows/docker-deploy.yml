@@ -37,14 +37,17 @@ jobs:
           docker run -d --name my-container ${{ secrets.DOCKER_HUB_USERNAME }}/personal-website:v1
 
     # Install kubectl and set up the Kubernetes context manually
-    - name: Install kubectl and Set up Kubernetes context
+    - name: Install kubectl
       run: |
         curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
         chmod +x ./kubectl
         sudo mv ./kubectl /usr/local/bin/kubectl
-        echo "${{ secrets.KUBECONFIG_CONTENT }}" > kubeconfig
-        export KUBECONFIG=$PWD/kubeconfig
 
     - name: Deploy to Kubernetes Cluster
+      env:
+        KUBECONFIG_CONTENT: ${{ secrets.KUBECONFIG_CONTENT }}
       run: |
+        echo "${KUBECONFIG_CONTENT}" > kubeconfig
+        export KUBECONFIG=$PWD/kubeconfig
         kubectl apply -f personal-website-deployment.yaml
+
